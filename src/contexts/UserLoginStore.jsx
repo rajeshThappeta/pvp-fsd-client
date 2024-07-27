@@ -26,6 +26,8 @@ function UserLoginStore({ children }) {
         setCurrentUser(result.user)
         setUserLoginStatus(true)
         setErr('') 
+        //save token in session storage
+        sessionStorage.setItem('token',result.token)
       } else {
           setErr(result.message);
           setCurrentUser({})
@@ -42,6 +44,8 @@ function UserLoginStore({ children }) {
     setCurrentUser({});
     setUserLoginStatus(false);
     setErr('')
+    //remove token from session storage
+    sessionStorage.removeItem('token')
   }
 
   return (

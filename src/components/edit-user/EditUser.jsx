@@ -11,15 +11,17 @@ function EditUser() {
   //save modified user after edit
     async function onSave(modifiedUser){
         console.log(modifiedUser)
-        let res = await fetch(`http://localhost:3000/users/${currentUser.id}`, {
+        let res = await fetch('http://localhost:4000/user-api/user', {
             method: "PUT",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify(modifiedUser),
           });
-          console.log(res)
-          if(res.status===200){
+          let data=await res.json()
+          console.log("data :",data)
+          if(data.message==='User modified'){
             modifiedUser.id=currentUser.id;
             setCurrentUser(modifiedUser)
+
             navigate("/user-profile")
           }
     }
@@ -38,6 +40,7 @@ function EditUser() {
             className="form-control"
             {...register("username", { required: true })}
             value={setValue("username", currentUser.username)}
+            disabled
           />
         </div>
         {/* password */}

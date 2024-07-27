@@ -7,17 +7,20 @@ import "./Cart.css";
 
 function Cart() {
   let { currentUser } = useContext(userLoginContext);
-  let [cartItems, setCartItems] = useState([]);
+  let [cart,setCart]=useState([])
 
-  //get products from cart by username
-  async function getProductsOfUserCart() {
-    let res = await fetch(
-      `http://localhost:3000/user-cart?username=${currentUser.username}`
-    );
-
-    let cartItemsList = await res.json();
-    setCartItems(cartItemsList);
+  console.log(currentUser)
+  //get latest cart
+  async function getUserCart(){
+    let res=await fetch(`http://localhost:4000/user-api/cart/${currentUser.username}`)
+    let data=await res.json();
+    setCart(data.payload.products)
   }
+
+ 
+  useEffect(()=>{
+    getUserCart()
+  },[])
 
   //delete oroduct from cart
   async function deleteProduct(productId) {
@@ -28,13 +31,9 @@ function Cart() {
     getProductsOfUserCart();
   }
 
-  useEffect(() => {
-    getProductsOfUserCart();
-  }, []);
-
   return (
     <div>
-      {cartItems.length === 0 ? (
+      {currentUser.products.length === 0 ? (
         <p className="display-1 text-center text-danger">Cart is empty</p>
       ) : (
         <table className="table text-center">
@@ -47,7 +46,7 @@ function Cart() {
             </tr>
           </thead>
           <tbody>
-            {cartItems.map((cartItem) => (
+            {cart.map((cartItem) => (
               <tr key={cartItem.id}>
                 <td>{cartItem.id}</td>
                 <td>{cartItem.title}</td>

@@ -15,6 +15,7 @@ function UserProfile() {
     navigate("../edit-user");
   }
 
+  
   return (
     <div>
       <div className="text-end text-end p-3">
@@ -39,7 +40,10 @@ function UserProfile() {
         </li>
         <li className="nav-item">
           <Link to="cart" className="nav-link text-info">
-            <FaCartArrowDown className="fs-3 text-warning " /> Cart
+            <FaCartArrowDown className="fs-3 text-warning "  /> 
+            
+            Cart
+            {/* <span className="badge bg-secondary ms-3">{currentUser.products.length}</span> */}
           </Link>
         </li>
       </ul>

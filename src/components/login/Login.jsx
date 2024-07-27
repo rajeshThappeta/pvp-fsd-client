@@ -24,6 +24,9 @@ function Login() {
 
   useEffect(() => {
     if (userLoginStatus === true) {
+      //save token in session storage
+
+
       navigate("/user-profile");
     }
   }, [userLoginStatus]);
